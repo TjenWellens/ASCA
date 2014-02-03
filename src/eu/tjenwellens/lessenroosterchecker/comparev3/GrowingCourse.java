@@ -13,7 +13,22 @@ import java.util.Set;
  * @author Tjen
  */
 public class GrowingCourse {
-    private List<List<Vak>> juisteVakken = new LinkedList<>();
+    private List<LinkedList<Vak>> juisteVakken = new LinkedList<>();
+
+    public GrowingCourse() {
+    }
+
+    public GrowingCourse(List<Vak> vakken) {
+        initJuisteVakken(vakken);
+    }
+
+    private void initJuisteVakken(List<Vak> vakken) {
+        for (Vak vak : vakken) {
+            LinkedList<Vak> l = new LinkedList<>();
+            l.add(vak);
+            juisteVakken.add(l);
+        }
+    }
 
     public boolean merge(List<Vak> tryVakken) {
         if (tryVakken.isEmpty()) {
@@ -21,13 +36,13 @@ public class GrowingCourse {
         }
         if (juisteVakken.isEmpty()) {
             for (Vak vak : tryVakken) {
-                List<Vak> l = new LinkedList<>();
+                LinkedList<Vak> l = new LinkedList<>();
                 l.add(vak);
                 juisteVakken.add(l);
             }
             return true;
         }
-        List<List<Vak>> ok = new LinkedList<>();
+        List<LinkedList<Vak>> ok = new LinkedList<>();
         for (Vak vak : tryVakken) {
             for (List<Vak> juisteEntry : juisteVakken) {
                 juisteEntry.add(vak);
@@ -35,10 +50,32 @@ public class GrowingCourse {
                     ok.add(new LinkedList<>(juisteEntry));
                 }
                 juisteEntry.remove(vak);
+                if (juisteEntry.contains(vak)) {
+                    throw new RuntimeException("Vakken niet uniek");
+                }
             }
+        }
+        if (ok.isEmpty()) {
+            System.out.println("errr");
         }
         juisteVakken = ok;
         return !juisteVakken.isEmpty();
+    }
+
+    public boolean merge(GrowingCourse gc) {
+        if (gc.isEmpty()) {
+            return true;
+        }
+        while (!gc.juisteVakken.get(0).isEmpty()) {
+            LinkedList<Vak> tryVakken = new LinkedList<>();
+            for (LinkedList<Vak> vakken : gc.juisteVakken) {
+                tryVakken.add(vakken.removeFirst());
+            }
+            if (!merge(tryVakken)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean check(Collection<Vak> vakken) {
@@ -53,7 +90,7 @@ public class GrowingCourse {
         return true;
     }
 
-    public List<List<Vak>> getJuisteVakken() {
+    public List<? extends List<Vak>> getJuisteVakken() {
         return juisteVakken;
     }
 
