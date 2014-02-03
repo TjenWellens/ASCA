@@ -29,11 +29,20 @@ public class GrowingCourseComparer extends CourseComparer {
         System.out.println("\n========================\n");
         // convert courses
         GrowingCourse gc = new GrowingCourse();
-        for (Course course : courses.getAllCourses()) {
+        Collection<Course> cc = courses.getAllCourses();
+        System.out.println("Total: " + cc.size());
+        int counter = 1;
+        long time = System.currentTimeMillis();
+        System.out.println("Time" + time);
+        for (Course course : cc) {
+            System.out.println("Working on " + counter + "/" + cc.size());
             course.fix();
             if (!gc.merge(course.getAllVakken())) {
                 break;
             }
+            System.out.println("Done " + counter + "/" + cc.size() + "in " + (System.currentTimeMillis() - time) + "millis");
+            time = System.currentTimeMillis();
+            counter++;
         }
         if (gc.isEmpty()) {
             System.out.println("Geen mogelijke oplossingen gevonden");
