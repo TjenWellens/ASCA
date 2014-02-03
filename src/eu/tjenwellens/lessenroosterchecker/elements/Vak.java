@@ -1,8 +1,10 @@
 package eu.tjenwellens.lessenroosterchecker.elements;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  *
@@ -17,7 +19,7 @@ public class Vak implements Collection<Les> {
     }
 
     public Vak(Vak source) {
-        this.courseName=source.courseName;
+        this.courseName = source.courseName;
         for (Les les : source.lessen) {
             lessen.add(new ConcreteLes(les));
         }
@@ -94,5 +96,13 @@ public class Vak implements Collection<Les> {
     @Override
     public void clear() {
         lessen.clear();
+    }
+
+    public Collection<TimeStamp> getAllTimeStamps() {
+        Set<TimeStamp> timeStamps = new HashSet<>();
+        for (Les les : lessen) {
+            timeStamps.addAll(les.getTimeStamps());
+        }
+        return timeStamps;
     }
 }

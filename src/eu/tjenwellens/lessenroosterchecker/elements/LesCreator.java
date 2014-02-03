@@ -67,8 +67,8 @@ public class LesCreator {
             System.err.println("Failed to create les: " + e);
             return null;
         }
-//            String cursusNaam = this.naam.substring(this.naam.lastIndexOf('/') + 1);
-        String cursusNaam = this.naam;
+        String cursusNaam = this.naam.substring(this.naam.lastIndexOf('/') + 1);
+//        String cursusNaam = this.naam;
         String activiteitOmschrijving = this.details;
         TreeSet<Integer> weken = new TreeSet<>();
         for (String weekEntry : this.weken.split(", ")) {

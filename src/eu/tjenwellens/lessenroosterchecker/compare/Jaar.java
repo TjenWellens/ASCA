@@ -7,8 +7,10 @@ import java.util.Collection;
  *
  * @author Tjen
  */
-public interface KlassenHolder {
+public interface Jaar {
     boolean isReady();
 
     Collection<Klas> getKlassen();
+
+    void start();
 }

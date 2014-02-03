@@ -60,7 +60,8 @@ public class LessenroosterChecker {
     public static void main(String[] args) {
 //        Collection<Klas> klassen = getKlassen(Arrays.asList(args));
 //        new LessenroosterChecker(klassen);
-        new Comparer();
+//        new Comparer();
+        Comparer.main(args);
     }
 
     public static Collection<Filter> createFilters(Collection<String> allVakken, Collection<String> selection) {
@@ -95,30 +96,27 @@ public class LessenroosterChecker {
         return klas_entries;
     }
 
-    private static void printEntries(Collection<Klas> klassen, int amount) {
+    public static void printEntries(Collection<Klas> klassen, int amount) {
         System.out.println("Aantal klassen: " + klassen.size());
         int teller = 0;
         System.out.println(makeHeaderEntry());
         for (Klas klas : klassen) {
-            for (Les les : klas) {
-                if (amount >= 0 && teller >= amount) {
-                    break;
-                }
-                System.out.println(les);
-                teller++;
-            }
+            teller += printEntry(klas, amount - teller);
         }
-//        for (Klas klas : klassen) {
-//            for (Vak course : klas.getAllCourses()) {
-//                for (Les les : course) {
-//                    if (amount >= 0 && teller >= amount) {
-//                        break;
-//                    }
-//                    System.out.println(les);
-//                    teller++;
-//                }
-//            }
-//        }
+    }
+
+    public static int printEntry(Collection<Les> lessen, int amount) {
+        System.out.println("Aantal klassen: " + lessen.size());
+        int teller = 0;
+        System.out.println(makeHeaderEntry());
+        for (Les les : lessen) {
+            if (amount >= 0 && teller >= amount) {
+                break;
+            }
+            System.out.println(les);
+            teller++;
+        }
+        return teller;
     }
 
     private static LesCreator makeHeaderEntry() {

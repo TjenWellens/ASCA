@@ -46,7 +46,7 @@ class ConcreteLes implements Les {
     private void initTimeStamps() throws TimeStampOverlapException {
         this.timeStamps = new HashSet();
         boolean overlap = false;
-        for (TimeStamp timeStamp : TimeStamp.createTimeStamps(weken, dag, duur.getBegin(), duur.getEind())) {
+        for (TimeStamp timeStamp : TimeStamp.createTimeStamps(this, weken, dag, duur.getBegin(), duur.getEind())) {
             overlap = !timeStamps.add(timeStamp) || overlap;
         }
         if (overlap) {

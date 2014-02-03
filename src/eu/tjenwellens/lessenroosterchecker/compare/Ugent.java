@@ -10,19 +10,23 @@ import java.util.LinkedList;
  *
  * @author Tjen
  */
-public class Ugent implements KlassenHolder {
-    private Collection<Klas> klassen;
+public class UGent extends VakSelector {
+    public UGent(Object notify) {
+        super(notify);
+    }
 
-    public Ugent() {
-        this.klassen = new LinkedList<>();
-        Klas klas = new Klas("unief");
+    @Override
+    protected Collection<Klas> loadVakken() {
+        Collection<Klas> klassen = new LinkedList<>();
+        Klas klas = new Klas("uni");
         klas.add(entry1());
         klas.add(entry2());
         klassen.add(klas);
+        return klassen;
     }
 
-    public final Les entry1() {
-        LesCreator lc = new LesCreator("unief", "maandag");
+    private Les entry1() {
+        LesCreator lc = new LesCreator("uni", "maandag");
         lc.setNaam("Computerarchitectuur");
         lc.setDetails("");
         lc.setBeginUur("10:00");
@@ -32,8 +36,8 @@ public class Ugent implements KlassenHolder {
         return lc.createLes();
     }
 
-    public final Les entry2() {
-        LesCreator lc = new LesCreator("unief", "donderdag");
+    private Les entry2() {
+        LesCreator lc = new LesCreator("uni", "donderdag");
         lc.setNaam("Computerarchitectuur");
         lc.setDetails("");
         lc.setBeginUur("14:30");
@@ -41,15 +45,5 @@ public class Ugent implements KlassenHolder {
         lc.setLesvorm("oefeningen");
         lc.setWeken("21-35");
         return lc.createLes();
-    }
-
-    @Override
-    public Collection<Klas> getKlassen() {
-        return klassen;
-    }
-
-    @Override
-    public boolean isReady() {
-        return true;
     }
 }

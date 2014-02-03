@@ -10,21 +10,23 @@ import java.util.List;
  */
 public class TimeStamp {
     int totalStamp;
+    ConcreteLes les;
 
-    public TimeStamp(int week, int day, int hour, int minute) {
-        totalStamp = week * 100000 + day * 10000 + hour * 100 + minute;
+    public TimeStamp(ConcreteLes les, int week, int day, int hour, int minute) {
+        this(les, week, day, hour * 100 + minute);
     }
 
-    public TimeStamp(int week, int day, int hour_minute) {
+    public TimeStamp(ConcreteLes les, int week, int day, int hour_minute) {
         totalStamp = week * 100000 + day * 10000 + hour_minute;
+        this.les = les;
     }
 
-    public static List<TimeStamp> createTimeStamps(Collection<Integer> weeks, WeekDag weekDay, Tijd begin, Tijd end) {
+    public static List<TimeStamp> createTimeStamps(ConcreteLes les, Collection<Integer> weeks, WeekDag weekDay, Tijd begin, Tijd end) {
         List<TimeStamp> timeStamps = new ArrayList<>();
         for (Integer week : weeks) {
             int dag = weekDay.ordinal();
             for (int hour_minute = begin.getTotal() + 25; hour_minute < end.getTotal(); hour_minute += 25) {
-                timeStamps.add(new TimeStamp(week, dag, hour_minute));
+                timeStamps.add(new TimeStamp(les, week, dag, hour_minute));
             }
         }
         return timeStamps;

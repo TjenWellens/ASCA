@@ -28,6 +28,10 @@ public class Klas implements Collection<Les> {
         }
     }
 
+    public String getKlasNaam() {
+        return klasNaam;
+    }
+
     public Klas(Klas source) {
         this.faculteit = source.faculteit;
         this.richting = source.richting;
@@ -179,5 +183,13 @@ public class Klas implements Collection<Les> {
     @Override
     public void clear() {
         courseName_course.clear();
+    }
+
+    public Collection<TimeStamp> getAllTimeStamps() {
+        Collection<TimeStamp> timeStamps=new LinkedList<>();
+        for (Vak vak : courseName_course.values()) {
+            timeStamps.addAll(vak.getAllTimeStamps());
+        }
+        return timeStamps;
     }
 }

@@ -6,12 +6,13 @@ import eu.tjenwellens.lessenroosterchecker.gui.CourseSelectionPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  *
  * @author Tjen
  */
-public abstract class HoGent implements KlassenHolder, ActionListener {
+public abstract class VakSelector extends Thread implements Jaar, ActionListener {
     private Collection<Klas> klassen;
     private Collection<String> allVakken;
     private Collection<String> selection;
@@ -19,18 +20,27 @@ public abstract class HoGent implements KlassenHolder, ActionListener {
     private boolean ready = false;
     private final Object notify;
 
-    public HoGent(Object notify) {
+    public VakSelector(Object notify) {
         this.notify = notify;
-        loadVakken(getPaths());
-    }
-
-    private void loadVakken(Collection<String> paths) {
-        klassen = LessenroosterChecker.getKlassen(paths);
-        filter();
     }
 
     @Override
+    public void run() {
+        this.klassen = loadVakken();
+        filter();
+    }
+
+    protected abstract Collection<Klas> loadVakken();
+
+    @Override
     public Collection<Klas> getKlassen() {
+        Collection<Klas> remove = new LinkedList<>();
+        for (Klas klas : klassen) {
+            if (klas.isEmpty()) {
+                remove.add(klas);
+            }
+        }
+        klassen.removeAll(remove);
         return klassen;
     }
 
@@ -61,6 +71,4 @@ public abstract class HoGent implements KlassenHolder, ActionListener {
             notify.notify();
         }
     }
-
-    protected abstract Collection<String> getPaths();
 }

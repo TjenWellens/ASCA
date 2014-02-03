@@ -8,18 +8,21 @@ import java.util.Collection;
  */
 public class Waiter extends Thread {
     private Comparer comp;
-    private Collection<KlassenHolder> holders;
+    private Collection<Jaar> jaren;
 
     public Waiter(Comparer comp) {
         this.comp = comp;
     }
 
-    public void setHolders(Collection<KlassenHolder> holders) {
-        this.holders = holders;
+    public void setHolders(Collection<Jaar> holders) {
+        this.jaren = holders;
     }
 
     @Override
     public void run() {
+        for (Jaar jaar : jaren) {
+            jaar.start();
+        }
         synchronized (this) {
             while (!areAllDone()) {
                 try {
@@ -32,10 +35,10 @@ public class Waiter extends Thread {
     }
 
     private boolean areAllDone() {
-        if (holders == null) {
+        if (jaren == null) {
             return true;
         }
-        for (KlassenHolder klassenHolder : holders) {
+        for (Jaar klassenHolder : jaren) {
             if (!klassenHolder.isReady()) {
                 return false;
             }
