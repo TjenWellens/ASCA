@@ -30,7 +30,15 @@ public class Course {
         if (fixed) {
             return vakPerKlas.get(index);
         } else {
-            throw new CourseNotFixedException(this);
+            throw new CourseNotFixedException(this.name);
+        }
+    }
+
+    public List<Vak> getAllVakken() {
+        if (fixed) {
+            return vakPerKlas;
+        } else {
+            throw new CourseNotFixedException(this.name);
         }
     }
 
@@ -39,7 +47,7 @@ public class Course {
             index = (index + 1) % vakPerKlas.size();
             return index == 0;
         } else {
-            throw new CourseNotFixedException(this);
+            throw new CourseNotFixedException(this.name);
         }
     }
 

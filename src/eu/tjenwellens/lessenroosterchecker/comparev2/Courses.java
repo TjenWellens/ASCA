@@ -96,4 +96,8 @@ public class Courses {
         }
         return true;
     }
+
+    public Collection<Course> getAllCourses() {
+        return courseName_course.values();
+    }
 }

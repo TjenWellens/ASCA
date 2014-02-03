@@ -1,6 +1,6 @@
 package eu.tjenwellens.lessenroosterchecker;
 
-import eu.tjenwellens.lessenroosterchecker.comparev2.CourseComparer;
+import eu.tjenwellens.lessenroosterchecker.comparev3.GrowingCourseComparer;
 import eu.tjenwellens.lessenroosterchecker.elements.Klas;
 import eu.tjenwellens.lessenroosterchecker.elements.Les;
 import eu.tjenwellens.lessenroosterchecker.elements.LesCreator;
@@ -59,7 +59,7 @@ public class LessenroosterChecker {
 //        Collection<Klas> klassen = getKlassen(Arrays.asList(args));
 //        new LessenroosterChecker(klassen);
 //        new KlasComparer();
-        CourseComparer.main(args);
+        GrowingCourseComparer.main(args);
     }
 
     public static Collection<Filter> createFilters(Collection<String> allVakken, Collection<String> selection) {

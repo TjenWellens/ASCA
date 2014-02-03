@@ -18,7 +18,7 @@ import java.util.LinkedList;
  */
 public class CourseComparer implements WaiterWaiter {
     private static final boolean goCrazy = false;
-    private Collection<Jaar> jaren = new LinkedList<>();
+    protected Collection<Jaar> jaren = new LinkedList<>();
     private Waiter w;
 
     public CourseComparer() {
@@ -67,7 +67,7 @@ public class CourseComparer implements WaiterWaiter {
         System.exit(0);
     }
 
-    private void printSelectedVakken() {
+    protected void printSelectedVakken() {
         Collection<String> totalSelection = new LinkedList();
         for (Jaar jaar : jaren) {
             totalSelection.addAll(LessenroosterChecker.extractVakken(jaar.getKlassen()));

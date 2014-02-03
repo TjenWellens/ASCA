@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -14,6 +15,32 @@ public class Vak implements Collection<Les> {
     private String courseName;
     private String klasNaam;
     private Collection<Les> lessen = new LinkedList<>();
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.courseName);
+        hash = 29 * hash + Objects.hashCode(this.klasNaam);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vak other = (Vak) obj;
+        if (!Objects.equals(this.courseName, other.courseName)) {
+            return false;
+        }
+        if (!Objects.equals(this.klasNaam, other.klasNaam)) {
+            return false;
+        }
+        return true;
+    }
 
     public Vak(String courseName, String klasNaam) {
         this.courseName = courseName;
