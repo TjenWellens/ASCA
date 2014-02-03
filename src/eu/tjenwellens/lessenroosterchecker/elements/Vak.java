@@ -1,0 +1,98 @@
+package eu.tjenwellens.lessenroosterchecker.elements;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+/**
+ *
+ * @author Tjen
+ */
+public class Vak implements Collection<Les> {
+    private String courseName;
+    private Collection<Les> lessen = new LinkedList<>();
+
+    public Vak(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public Vak(Vak source) {
+        this.courseName=source.courseName;
+        for (Les les : source.lessen) {
+            lessen.add(new ConcreteLes(les));
+        }
+    }
+
+    @Override
+    public int size() {
+        return lessen.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return lessen.isEmpty();
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return lessen.contains(o);
+    }
+
+    @Override
+    public Iterator<Les> iterator() {
+        return lessen.iterator();
+    }
+
+    @Override
+    public Object[] toArray() {
+        return lessen.toArray();
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return lessen.toArray(a);
+    }
+
+    @Override
+    public boolean add(Les e) {
+        if (this.courseName.equals(e.getCursusNaam())) {
+            return lessen.add(e);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return lessen.remove(o);
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return lessen.containsAll(c);
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Les> lessen) {
+        boolean succes = false;
+        for (Les les : lessen) {
+            succes = add(les) || succes;
+        }
+        return succes;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return lessen.removeAll(c);
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return lessen.retainAll(c);
+    }
+
+    @Override
+    public void clear() {
+        lessen.clear();
+    }
+}
