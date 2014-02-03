@@ -14,13 +14,13 @@ import java.util.Set;
  *
  * @author Tjen
  */
-public class Comparer {
+public class KlasComparer implements WaiterWaiter {
     private Collection<Jaar> jaren = new LinkedList<>();
     private Waiter w;
 
-    public Comparer() {
+    public KlasComparer() {
         w = new Waiter(this);
-        jaren.add(new UGent(w));
+        jaren.add(new UGent2(w));
         jaren.add(new HoGent1(w));
         jaren.add(new HoGent2(w));
         w.setHolders(jaren);
@@ -30,6 +30,7 @@ public class Comparer {
         w.start();
     }
 
+    @Override
     public void doneWaiting() {
         printSelectedVakken();
         printJaarList(jaren);
@@ -171,7 +172,7 @@ public class Comparer {
     }
 
     public static void main(String[] args) {
-        new Comparer().start();
+        new KlasComparer().start();
     }
 
     public static void testIntegers() {

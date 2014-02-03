@@ -4,7 +4,7 @@
  */
 package eu.tjenwellens.lessenroosterchecker.gui;
 
-import eu.tjenwellens.lessenroosterchecker.compare.UGent;
+import eu.tjenwellens.lessenroosterchecker.compare.UGent2;
 import eu.tjenwellens.lessenroosterchecker.elements.Les;
 import eu.tjenwellens.lessenroosterchecker.elements.LesCreator;
 import java.awt.GridLayout;

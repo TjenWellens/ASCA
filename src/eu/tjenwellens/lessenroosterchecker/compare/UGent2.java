@@ -10,15 +10,15 @@ import java.util.LinkedList;
  *
  * @author Tjen
  */
-public class UGent extends VakSelector {
-    public UGent(Object notify) {
+public class UGent2 extends VakSelector {
+    public UGent2(Object notify) {
         super(notify);
     }
 
     @Override
     protected Collection<Klas> loadVakken() {
         Collection<Klas> klassen = new LinkedList<>();
-        Klas klas = new Klas("uni");
+        Klas klas = new Klas("BI2");
         klas.add(entry1());
         klas.add(entry2());
         klassen.add(klas);
@@ -26,7 +26,7 @@ public class UGent extends VakSelector {
     }
 
     private Les entry1() {
-        LesCreator lc = new LesCreator("uni", "maandag");
+        LesCreator lc = new LesCreator("BI2", "maandag");
         lc.setNaam("Computerarchitectuur");
         lc.setDetails("");
         lc.setBeginUur("10:00");
@@ -37,7 +37,7 @@ public class UGent extends VakSelector {
     }
 
     private Les entry2() {
-        LesCreator lc = new LesCreator("uni", "donderdag");
+        LesCreator lc = new LesCreator("BI2", "donderdag");
         lc.setNaam("Computerarchitectuur");
         lc.setDetails("");
         lc.setBeginUur("14:30");

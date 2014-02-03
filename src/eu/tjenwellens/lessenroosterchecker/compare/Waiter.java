@@ -7,10 +7,10 @@ import java.util.Collection;
  * @author Tjen
  */
 public class Waiter extends Thread {
-    private Comparer comp;
+    private WaiterWaiter comp;
     private Collection<Jaar> jaren;
 
-    public Waiter(Comparer comp) {
+    public Waiter(WaiterWaiter comp) {
         this.comp = comp;
     }
 

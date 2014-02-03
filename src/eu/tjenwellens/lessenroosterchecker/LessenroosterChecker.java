@@ -1,6 +1,6 @@
 package eu.tjenwellens.lessenroosterchecker;
 
-import eu.tjenwellens.lessenroosterchecker.compare.Comparer;
+import eu.tjenwellens.lessenroosterchecker.comparev2.CourseComparer;
 import eu.tjenwellens.lessenroosterchecker.elements.Klas;
 import eu.tjenwellens.lessenroosterchecker.elements.Les;
 import eu.tjenwellens.lessenroosterchecker.elements.LesCreator;
@@ -8,8 +8,6 @@ import eu.tjenwellens.lessenroosterchecker.filters.*;
 import eu.tjenwellens.lessenroosterchecker.gui.CourseSelectionPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -60,8 +58,8 @@ public class LessenroosterChecker {
     public static void main(String[] args) {
 //        Collection<Klas> klassen = getKlassen(Arrays.asList(args));
 //        new LessenroosterChecker(klassen);
-//        new Comparer();
-        Comparer.main(args);
+//        new KlasComparer();
+        CourseComparer.main(args);
     }
 
     public static Collection<Filter> createFilters(Collection<String> allVakken, Collection<String> selection) {

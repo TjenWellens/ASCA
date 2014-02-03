@@ -12,10 +12,12 @@ import java.util.Set;
  */
 public class Vak implements Collection<Les> {
     private String courseName;
+    private String klasNaam;
     private Collection<Les> lessen = new LinkedList<>();
 
-    public Vak(String courseName) {
+    public Vak(String courseName, String klasNaam) {
         this.courseName = courseName;
+        this.klasNaam = klasNaam;
     }
 
     public Vak(Vak source) {
@@ -23,6 +25,10 @@ public class Vak implements Collection<Les> {
         for (Les les : source.lessen) {
             lessen.add(new ConcreteLes(les));
         }
+    }
+
+    public String getKlasNaam() {
+        return klasNaam;
     }
 
     @Override

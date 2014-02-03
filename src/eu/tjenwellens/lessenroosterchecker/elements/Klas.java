@@ -46,7 +46,7 @@ public class Klas implements Collection<Les> {
         String courseName = les.getCursusNaam();
         Vak course = courseName_course.get(courseName);
         if (course == null) {
-            course = new Vak(courseName);
+            course = new Vak(courseName, klasNaam);
             courseName_course.put(courseName, course);
         }
         return course.add(les);
