@@ -133,6 +133,7 @@ public class LessenroosterChecker {
         filters.add(new Not(new FilterLesvorm("EXSC")));
         filters.add(new Not(new FilterLesvorm("EXPC")));
         filters.add(new Not(new FilterLesvorm("EXMO")));
+        filters.add(new Not(new InhaallesFilter()));
 //        filters.add(new Not(new FilterLesvorm("EXPC")));
         return filters;
     }

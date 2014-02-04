@@ -19,7 +19,7 @@ public class KlasPrinter extends KlasComparer {
     private Collection<String> selection;
 
     public KlasPrinter() {
-        chatty = false;
+        chatty = true;
         initSelection();
     }
 
@@ -104,10 +104,10 @@ public class KlasPrinter extends KlasComparer {
     }
 
     private void initSelection() {
-        selection = new HashSet<>();
-        selection.add("Klas: BI2 1C3 2B2 ");
-        selection.add("Klas: BI2 1D1 2B1 ");
-        selection.add("Klas: BI2 1D1 2B2 ");
-        selection.add("Klas: BI2 1C3 2B1 ");
+//        selection = new HashSet<>();
+//        selection.add("Klas: BI2 1C3 2B2 ");
+//        selection.add("Klas: BI2 1D1 2B1 ");
+//        selection.add("Klas: BI2 1D1 2B2 ");
+//        selection.add("Klas: BI2 1C3 2B1 ");
     }
 }
