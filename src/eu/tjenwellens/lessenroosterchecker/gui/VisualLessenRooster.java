@@ -19,28 +19,17 @@ import javax.swing.JFrame;
  * @author Tjen
  */
 public class VisualLessenRooster extends javax.swing.JPanel {
-    private int weekCriterium;
     private JFrame frame;
     private int[][] lessen;
 
     /**
      * Creates new form VisualLessenRooster
      */
-    public VisualLessenRooster(JFrame frame, int weekCriterium) {
+    private VisualLessenRooster(JFrame frame, int[][] lessen) {
         this.frame = frame;
-        this.weekCriterium = weekCriterium;
-        initLessen();
+        this.lessen = lessen;
         initComponents();
         this.setPreferredSize(new Dimension(500, 850));
-    }
-
-    private void initLessen() {
-        lessen = new int[7][40];
-//        lessen[5][10] = 1;
-//        lessen[3][10] = 2;
-//        lessen[2][10] = 1;
-//        lessen[1][10] = 1;
-//        lessen[6][39] = 5;
     }
 
     public void setLessen(int[][] lessen) {
@@ -49,62 +38,9 @@ public class VisualLessenRooster extends javax.swing.JPanel {
         validate();
     }
 
-    public void addTimeStamps(Collection<TimeStamp> timeStamps) {
-//        int teller = 1;
-        for (TimeStamp timeStamp : timeStamps) {
-//            teller++;
-//            System.out.println(teller + "/" + timeStamps.size());
-            int stamp = timeStamp.hashCode();
-            if (stamp < 22 * 100000) {
-                System.out.println("yep");
-            }
-            int week = stamp / 100000;
-            if (week != weekCriterium) {
-                continue;
-            }
-            int day = stamp / 10000 - week * 10;
-            int hour = stamp / 100 - (week * 10 + day) * 100;
-            int min = stamp - ((week * 10 + day) * 100 + hour) * 100;
-            int kwart = (hour - 8) * 4 + min / 25;
-            lessen[day][kwart]++;
-            System.out.println(lessen[day][kwart]);
-        }
-        invalidate();
-        validate();
-    }
-
-    public static void main(String[] args) {
-        VisualLessenRooster pnl = create(21);
-        pnl.addTimeStamps(entry1().getTimeStamps());
-        pnl.addTimeStamps(entry2().getTimeStamps());
-//        pnl.addTimeStamps(entry1().getTimeStamps());
-    }
-
-    private static Les entry1() {
-        LesCreator lc = new LesCreator("uni", "maandag");
-        lc.setNaam("Computerarchitectuur");
-        lc.setDetails("");
-        lc.setBeginUur("10:00");
-        lc.setEindUur("12:45");
-        lc.setLesvorm("theorie");
-        lc.setWeken("21-35");
-        return lc.createLes();
-    }
-
-    private static Les entry2() {
-        LesCreator lc = new LesCreator("uni", "donderdag");
-        lc.setNaam("Computerarchitectuur");
-        lc.setDetails("");
-        lc.setBeginUur("14:30");
-        lc.setEindUur("17:15");
-        lc.setLesvorm("oefeningen");
-        lc.setWeken("21-35");
-        return lc.createLes();
-    }
-
-    public static VisualLessenRooster create(int weekCriterium) {
+    public static VisualLessenRooster create(int[][] rooster) {
         JFrame frame = new JFrame("Visual");
-        VisualLessenRooster panel = new VisualLessenRooster(frame, weekCriterium);
+        VisualLessenRooster panel = new VisualLessenRooster(frame, rooster);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
         frame.pack();

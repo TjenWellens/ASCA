@@ -10,12 +10,14 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Tjen
  */
 public class KlasComparer implements WaiterWaiter {
+    protected boolean chatty = true;
     protected Collection<Jaar> jaren = new LinkedList<>();
     private Waiter w;
 
@@ -34,30 +36,40 @@ public class KlasComparer implements WaiterWaiter {
 
     @Override
     public void doneWaiting() {
-        printSelectedVakken();
-        printJaarList(jaren);
-        System.out.println("\n========================\n");
+        if (chatty) {
+            printSelectedVakken();
+            printJaarList(jaren);
+            System.out.println("\n========================\n");
+        }
         Klas[][] perm = generateKlassenPermutatie(jaren);
-        printKlasArray(perm);
-        System.out.println("\n========================\n");
+        if (chatty) {
+            printKlasArray(perm);
+            System.out.println("\n========================\n");
+        }
         Collection<Collection<Klas>> succes = checkPermutationClash(perm);
         if (succes.isEmpty()) {
             System.out.println("Geen mogelijke oplossingen gevonden");
             System.exit(0);
         }
-        System.out.println("Aantal oplossingen: " + succes.size());
-        int teller = 1;
-        for (Collection<Klas> klassenMatch : succes) {
-            System.out.println("Oplossing " + teller + ": ");
-            for (Klas klas : klassenMatch) {
-                System.out.print(klas.getKlasNaam());
-                System.out.print('\t');
+        if (chatty) {
+            System.out.println("Aantal oplossingen: " + succes.size());
+            int teller = 1;
+            for (Collection<Klas> klassenMatch : succes) {
+                System.out.println("Oplossing " + teller + ": ");
+                for (Klas klas : klassenMatch) {
+                    System.out.print(klas.getKlasNaam());
+                    System.out.print('\t');
+                }
+                System.out.println();
+                teller++;
             }
-            System.out.println();
-            teller++;
         }
+        succes(succes);
 //        System.out.println("First Klasses match?" + testFirstKlassen());
-        System.exit(0);
+        exitFrame();
+    }
+
+    protected void succes(Collection<Collection<Klas>> succes) {
     }
 
     protected void printSelectedVakken() {
@@ -258,5 +270,12 @@ public class KlasComparer implements WaiterWaiter {
             }
             System.out.println();
         }
+    }
+
+    private void exitFrame() {
+        JFrame f = new JFrame("Exit?");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.pack();
+        f.setVisible(true);
     }
 }

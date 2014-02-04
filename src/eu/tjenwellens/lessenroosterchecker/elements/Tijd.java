@@ -28,6 +28,14 @@ public class Tijd implements Comparable<Tijd> {
         return total;
     }
 
+    public int getUur() {
+        return uur;
+    }
+
+    public int getMinuten() {
+        return minuten;
+    }
+
     @Override
     public String toString() {
         return uur + ":" + minuten;

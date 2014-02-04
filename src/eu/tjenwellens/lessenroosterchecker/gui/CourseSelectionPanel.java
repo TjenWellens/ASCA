@@ -10,6 +10,7 @@ import eu.tjenwellens.lessenroosterchecker.elements.LesCreator;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.TreeSet;
 import javax.swing.JCheckBox;
@@ -22,6 +23,7 @@ import javax.swing.JFrame;
 public class CourseSelectionPanel extends javax.swing.JPanel {
     private JFrame frame;
     private Collection<JCheckBox> boxes = new LinkedList<>();
+    private Collection<String> defaults = new HashSet<>();
 
     /**
      * Creates new form CourseSelectionPanel
@@ -29,6 +31,7 @@ public class CourseSelectionPanel extends javax.swing.JPanel {
     public CourseSelectionPanel(JFrame frame) {
         this.frame = frame;
         initComponents();
+        initDefaults();
     }
 
     public void setOptions(Collection<String> options) {
@@ -36,12 +39,29 @@ public class CourseSelectionPanel extends javax.swing.JPanel {
         plnCheckboxes.removeAll();
         plnCheckboxes.setLayout(new GridLayout(options.size(), 1));
         for (String courseName : options) {
-            JCheckBox box = new JCheckBox(courseName);
-            boxes.add(box);
-            plnCheckboxes.add(box);
+            addBox(courseName);
         }
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private void addBox(String courseName) {
+        JCheckBox box = new JCheckBox(courseName);
+        boxes.add(box);
+        plnCheckboxes.add(box);
+        if (defaults.contains(courseName)) {
+            box.setSelected(true);
+        }
+    }
+
+    private void initDefaults() {
+        defaults.add("Computerarchitectuur");
+        defaults.add("Computernetwerken I (TI)");
+        defaults.add("Partim Strategisch Management (TI)");
+        defaults.add("Partim Financieel Management (TI)");
+        defaults.add("Webapplicaties II (TI)");
+        defaults.add("i&sup1;Talent (TI)");
+        defaults.add("IT2Business (TI)");
     }
 
     public static CourseSelectionPanel create() {
