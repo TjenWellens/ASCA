@@ -11,15 +11,15 @@ import java.util.List;
  *
  * @author Tjen
  */
-public class UGent2 extends VakSelector {
-    public UGent2(Object notify) {
+public class UGent1 extends VakSelector {
+    public UGent1(Object notify) {
         super(notify);
     }
 
     @Override
     protected List<Klas> loadVakken() {
         List<Klas> klassen = new LinkedList<>();
-        Klas klas = new Klas("BI2");
+        Klas klas = new Klas("BI1");
         klas.add(entry1());
         klas.add(entry2());
         klassen.add(klas);
@@ -27,23 +27,23 @@ public class UGent2 extends VakSelector {
     }
 
     private Les entry1() {
-        LesCreator lc = new LesCreator("BI2", "maandag");
-        lc.setNaam("BI/Computerarchitectuur");
+        LesCreator lc = new LesCreator("BI1", "maandag");
+        lc.setNaam("BI/Analyse 1");
         lc.setDetails("");
-        lc.setBeginUur("10:00");
-        lc.setEindUur("12:45");
-        lc.setLesvorm("theorie");
+        lc.setBeginUur("14:30");
+        lc.setEindUur("17:15");
+        lc.setLesvorm("?");
         lc.setWeken("21-35");
         return lc.createLes();
     }
 
     private Les entry2() {
-        LesCreator lc = new LesCreator("BI2", "donderdag");
-        lc.setNaam("BI/Computerarchitectuur");
+        LesCreator lc = new LesCreator("BI1", "woensdag");
+        lc.setNaam("BI/Analyse 1");
         lc.setDetails("");
-        lc.setBeginUur("14:30");
-        lc.setEindUur("17:15");
-        lc.setLesvorm("oefeningen");
+        lc.setBeginUur("8:30");
+        lc.setEindUur("11:15");
+        lc.setLesvorm("?");
         lc.setWeken("21-35");
         return lc.createLes();
     }

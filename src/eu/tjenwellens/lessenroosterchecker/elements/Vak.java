@@ -16,6 +16,10 @@ public class Vak implements Collection<Les> {
     private String klasNaam;
     private Collection<Les> lessen = new LinkedList<>();
 
+    public String getCourseName() {
+        return courseName;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

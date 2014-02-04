@@ -1,7 +1,7 @@
 package eu.tjenwellens.lessenroosterchecker.compare;
 
 import eu.tjenwellens.lessenroosterchecker.elements.Klas;
-import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface Jaar {
     boolean isReady();
 
-    Collection<Klas> getKlassen();
+    List<Klas> getKlassen();
 
     void start();
 }

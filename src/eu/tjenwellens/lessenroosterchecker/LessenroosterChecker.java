@@ -1,6 +1,6 @@
 package eu.tjenwellens.lessenroosterchecker;
 
-import eu.tjenwellens.lessenroosterchecker.comparev4.MultiGrowingCourseComparer;
+import eu.tjenwellens.lessenroosterchecker.comparev3.GrowingCourseComparer;
 import eu.tjenwellens.lessenroosterchecker.elements.Klas;
 import eu.tjenwellens.lessenroosterchecker.elements.Les;
 import eu.tjenwellens.lessenroosterchecker.elements.LesCreator;
@@ -59,7 +59,7 @@ public class LessenroosterChecker {
 //        Collection<Klas> klassen = getKlassen(Arrays.asList(args));
 //        new LessenroosterChecker(klassen);
 //        new KlasComparer();
-        MultiGrowingCourseComparer.main(args);
+        GrowingCourseComparer.main(args);
     }
 
     public static Collection<Filter> createFilters(Collection<String> allVakken, Collection<String> selection) {
@@ -80,7 +80,7 @@ public class LessenroosterChecker {
         return vakken;
     }
 
-    public static Collection<Klas> getKlassen(Collection<String> paths) {
+    public static List<Klas> getKlassen(Collection<String> paths) {
 //        List<String> paths = new ArrayList<>(Arrays.asList(args));
 //        paths.add("showtimetable1.html");
 //        paths.add("showtimetable2.html");
@@ -132,6 +132,7 @@ public class LessenroosterChecker {
         Collection<Filter> filters = new LinkedList<>();
         filters.add(new Not(new FilterLesvorm("EXSC")));
         filters.add(new Not(new FilterLesvorm("EXPC")));
+        filters.add(new Not(new FilterLesvorm("EXMO")));
 //        filters.add(new Not(new FilterLesvorm("EXPC")));
         return filters;
     }

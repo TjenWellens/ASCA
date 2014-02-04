@@ -7,13 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
  * @author Tjen
  */
 public abstract class VakSelector extends Thread implements Jaar, ActionListener {
-    private Collection<Klas> klassen;
+    private List<Klas> klassen;
     private Collection<String> allVakken;
     private Collection<String> selection;
     private CourseSelectionPanel panel;
@@ -30,10 +31,10 @@ public abstract class VakSelector extends Thread implements Jaar, ActionListener
         filter();
     }
 
-    protected abstract Collection<Klas> loadVakken();
+    protected abstract List<Klas> loadVakken();
 
     @Override
-    public Collection<Klas> getKlassen() {
+    public List<Klas> getKlassen() {
         Collection<Klas> remove = new LinkedList<>();
         for (Klas klas : klassen) {
             if (klas.isEmpty()) {

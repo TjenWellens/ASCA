@@ -4,6 +4,7 @@ import eu.tjenwellens.lessenroosterchecker.LessenroosterChecker;
 import eu.tjenwellens.lessenroosterchecker.elements.Klas;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -15,8 +16,8 @@ public class HoGent2 extends VakSelector {
     }
 
     @Override
-    protected Collection<Klas> loadVakken() {
-        Collection<String> paths = new LinkedList<>();
+    protected List<Klas> loadVakken() {
+        List<String> paths = new LinkedList<>();
         paths.add("jaar2.html");
         return LessenroosterChecker.getKlassen(paths);
     }

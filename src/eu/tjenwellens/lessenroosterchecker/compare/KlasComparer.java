@@ -15,11 +15,12 @@ import java.util.Set;
  * @author Tjen
  */
 public class KlasComparer implements WaiterWaiter {
-    private Collection<Jaar> jaren = new LinkedList<>();
+    protected Collection<Jaar> jaren = new LinkedList<>();
     private Waiter w;
 
     public KlasComparer() {
         w = new Waiter(this);
+        jaren.add(new UGent1(w));
         jaren.add(new UGent2(w));
         jaren.add(new HoGent1(w));
         jaren.add(new HoGent2(w));
@@ -58,7 +59,7 @@ public class KlasComparer implements WaiterWaiter {
         System.exit(0);
     }
 
-    private void printSelectedVakken() {
+    protected void printSelectedVakken() {
         Collection<String> totalSelection = new LinkedList();
         for (Jaar jaar : jaren) {
             totalSelection.addAll(LessenroosterChecker.extractVakken(jaar.getKlassen()));
@@ -241,7 +242,7 @@ public class KlasComparer implements WaiterWaiter {
         }
     }
 
-    static void printJaarList(Collection<Jaar> jaren) {
+    protected static void printJaarList(Collection<Jaar> jaren) {
         for (Jaar jaar : jaren) {
             for (Klas klas : jaar.getKlassen()) {
                 System.out.print(klas.getKlasNaam());
