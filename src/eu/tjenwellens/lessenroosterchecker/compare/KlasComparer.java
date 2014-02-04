@@ -139,10 +139,10 @@ public class KlasComparer implements WaiterWaiter {
             totalKlassenMultiplier *= jaar.getKlassen().size();
         }
         Klas[][] klassenPermutatie = new Klas[jaren.size()][totalKlassenMultiplier];
+        int multiplySize = 1;
         for (int jaarPos = 0; jaarPos < jaren.size(); jaarPos++) {
             List<Klas> klassen = new ArrayList<>(jaren.get(jaarPos).getKlassen());
             int size = klassen.size();
-            int multiplySize = 1;
             for (int klasPos = 0; klasPos < totalKlassenMultiplier; klasPos++) {
                 klassenPermutatie[jaarPos][klasPos] = klassen.get((klasPos / multiplySize) % size);
 //                klassenPermutatie[jaarPos][klasPos] = klassen.get(klasPos);
@@ -159,10 +159,10 @@ public class KlasComparer implements WaiterWaiter {
             totalKlassenMultiplier *= jaar.size();
         }
         Object[][] klassenPermutatie = new Object[jaren.size()][totalKlassenMultiplier];
+        int multiplySize = 1;
         for (int jaarPos = 0; jaarPos < jaren.size(); jaarPos++) {
             List<Object> klassen = new ArrayList<>(jaren.get(jaarPos));
             int size = klassen.size();
-            int multiplySize = 1;
             for (int klasPos = 0; klasPos < totalKlassenMultiplier; klasPos++) {
                 Object toWrite = klassen.get((klasPos / multiplySize) % size);
                 klassenPermutatie[jaarPos][klasPos] = toWrite;
@@ -174,20 +174,20 @@ public class KlasComparer implements WaiterWaiter {
     }
 
     public static void main(String[] args) {
-//        new KlasComparer().start();
-        testIntegers();
+        new KlasComparer().start();
+//        testIntegers();
     }
 
     public static void testIntegers() {
         List<List<? extends Object>> jaren = new ArrayList<>();
         List<Object> ugent = new ArrayList<>();
-        
+
 //        ugent.add("BI2");
 //        String ho1 = "1A1 1A2 1A3 1B1 1B2 1B3 1C1 1C2 1C3 1D1 1D2 1D3 1E1 1E2 1E3 1F1 1F2 1F3";
 //        String ho2 = "2A1 2A2 2B1 2B2 2C1 2C2";
 //        List<? extends Object> hogent1 = Arrays.asList(ho1.split(" "));
 //        List<? extends Object> hogent2 = Arrays.asList(ho2.split(" "));
-        
+
         ugent.add(0);
         ugent.add(2);
         ugent.add(3);
