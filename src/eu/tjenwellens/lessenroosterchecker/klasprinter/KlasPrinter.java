@@ -7,30 +7,44 @@ import eu.tjenwellens.lessenroosterchecker.elements.Les;
 import eu.tjenwellens.lessenroosterchecker.elements.Vak;
 import eu.tjenwellens.lessenroosterchecker.gui.VisualLessenRooster;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author Tjen
  */
 public class KlasPrinter extends KlasComparer {
-    private static final int ROOSTER_START = 8;
-    private static final int ROOSTER_END = 18;
-
     public KlasPrinter() {
         chatty = false;
     }
 
     @Override
     protected void succes(Collection<Collection<Klas>> succes) {
+        Map<int[][], String> roosters = createRoosters(succes);
+        for (Map.Entry<int[][], String> entry : roosters.entrySet()) {
+            int[][] rooster = entry.getKey();
+            String title = entry.getValue();
+            System.out.println(roosterTotal(rooster));
+            VisualLessenRooster.create(rooster, title);
+        }
+    }
+
+    private Map<int[][], String> createRoosters(Collection<Collection<Klas>> succes) {
+        Map<int[][], String> roosters = new HashMap<>();
         for (Collection<Klas> klassen : succes) {
-            int[][] rooster = new int[7][(ROOSTER_END - ROOSTER_START) * 4];
+            int[][] rooster = new int[7][(VisualLessenRooster.ROOSTER_END - VisualLessenRooster.ROOSTER_START) * 4];
+            StringBuilder title = new StringBuilder("Klas: ");
             for (Klas klas : klassen) {
+                title.append(klas.getKlasNaam()).append(' ');
                 for (Les les : klas) {
                     addLesToRooster(rooster, les);
                 }
             }
-            VisualLessenRooster.create(rooster);
+            roosters.put(rooster, title.toString());
+//            VisualLessenRooster.create(rooster, title.toString());
         }
+        return roosters;
     }
 
     void addLesToRooster(int[][] rooster, Les les) {
@@ -39,12 +53,22 @@ public class KlasPrinter extends KlasComparer {
         int beginKwart = calcKwart(duur.getBegin().getUur(), duur.getBegin().getMinuten());
         int eindKwart = calcKwart(duur.getEind().getUur(), duur.getEind().getMinuten());
         for (int kwart = beginKwart; kwart < eindKwart; kwart++) {
-            rooster[dag][kwart]++;
+            rooster[dag][kwart] = 1;
         }
     }
 
+    int roosterTotal(int[][] rooster) {
+        int total = 0;
+        for (int[] days : rooster) {
+            for (int kwartValue : days) {
+                total += kwartValue;
+            }
+        }
+        return total;
+    }
+
     int calcKwart(int uur, int minuten) {
-        return (uur - ROOSTER_START) * 4 + minuten / 25;
+        return (uur - VisualLessenRooster.ROOSTER_START) * 4 + minuten / 25;
     }
 
     public static void main(String[] args) {

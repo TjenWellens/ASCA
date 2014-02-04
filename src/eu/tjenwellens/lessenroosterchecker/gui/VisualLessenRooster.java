@@ -4,14 +4,11 @@
  */
 package eu.tjenwellens.lessenroosterchecker.gui;
 
-import eu.tjenwellens.lessenroosterchecker.elements.Les;
-import eu.tjenwellens.lessenroosterchecker.elements.LesCreator;
-import eu.tjenwellens.lessenroosterchecker.elements.TimeStamp;
+import eu.tjenwellens.lessenroosterchecker.elements.WeekDag;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.Collection;
 import javax.swing.JFrame;
 
 /**
@@ -19,6 +16,12 @@ import javax.swing.JFrame;
  * @author Tjen
  */
 public class VisualLessenRooster extends javax.swing.JPanel {
+    public static final int ROOSTER_START = 8;
+    public static final int ROOSTER_END = 18;
+    private static final int W = 300;
+    private static final int H = 400;
+    private Dimension size = new Dimension(50, 20);
+    private static final Point offset = new Point(20, 30);
     private JFrame frame;
     private int[][] lessen;
 
@@ -29,7 +32,15 @@ public class VisualLessenRooster extends javax.swing.JPanel {
         this.frame = frame;
         this.lessen = lessen;
         initComponents();
-        this.setPreferredSize(new Dimension(500, 850));
+        int w = (W - offset.x) / lessen.length;
+        int h = (H - offset.y) / lessen[0].length;
+        size = new Dimension(w, h);
+//        int width = (int) offset.getX() + size.width * lessen.length;
+//        int height = (int) offset.getY() + size.height * lessen[0].length;
+//        System.out.print(width);
+//        System.out.print(",");
+//        System.out.println(height);
+        this.setPreferredSize(new Dimension(W, H));
     }
 
     public void setLessen(int[][] lessen) {
@@ -38,8 +49,8 @@ public class VisualLessenRooster extends javax.swing.JPanel {
         validate();
     }
 
-    public static VisualLessenRooster create(int[][] rooster) {
-        JFrame frame = new JFrame("Visual");
+    public static VisualLessenRooster create(int[][] rooster, String title) {
+        JFrame frame = new JFrame(title);
         VisualLessenRooster panel = new VisualLessenRooster(frame, rooster);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
@@ -51,14 +62,17 @@ public class VisualLessenRooster extends javax.swing.JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Dimension size = new Dimension(50, 20);
-        Point offset = new Point(100, size.height + 10);
+
         for (int dag = 0; dag < lessen.length; dag++) {
             for (int kwart = 0; kwart < lessen[dag].length; kwart++) {
                 Color c;
                 switch (lessen[dag][kwart]) {
                     case 0:
-                        c = Color.white;
+                        if (dag >= 5) {
+                            c = getBackground().darker();
+                        } else {
+                            c = getBackground();
+                        }
                         break;
                     case 1:
                         c = Color.green;
@@ -78,10 +92,27 @@ public class VisualLessenRooster extends javax.swing.JPanel {
         }
         g.setColor(Color.black);
         for (int dag = 0; dag <= lessen.length; dag++) {
-            g.drawLine(offset.x + size.width * dag, offset.y, offset.x + size.width * dag, offset.y + size.height * lessen[0].length);
+            g.drawLine(offset.x + size.width * dag, 0, offset.x + size.width * dag, offset.y + size.height * lessen[0].length);
         }
         for (int kwart = 0; kwart <= lessen[0].length; kwart++) {
-            g.drawLine(offset.x, offset.y + size.height * kwart, offset.x + size.width * lessen.length, offset.y + size.height * kwart);
+            g.drawLine(0, offset.y + size.height * kwart, offset.x + size.width * lessen.length, offset.y + size.height * kwart);
+        }
+        int fontSize = g.getFontMetrics().getHeight();
+        for (WeekDag d : WeekDag.values()) {
+            String str = d.name().substring(0, 3).toUpperCase();
+            int x = offset.x + size.width * d.ordinal();
+            x += g.getFontMetrics().stringWidth(str) / 2;
+            int y = offset.y;
+            y -= g.getFontMetrics().getHeight() / 2;
+            g.drawString(str, x, y);
+        }
+        for (int uur = ROOSTER_START; uur < ROOSTER_END; uur++) {
+            String str = String.valueOf(uur);
+            int x = offset.x - g.getFontMetrics().stringWidth(str);
+            int kwart = (uur - ROOSTER_START) * 4;
+            int y = offset.y + size.height * kwart;
+            y += g.getFontMetrics().getHeight();
+            g.drawString(str, x, y);
         }
     }
 
