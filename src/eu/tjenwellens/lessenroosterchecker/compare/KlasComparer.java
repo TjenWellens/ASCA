@@ -4,6 +4,7 @@ import eu.tjenwellens.lessenroosterchecker.LessenroosterChecker;
 import eu.tjenwellens.lessenroosterchecker.elements.Klas;
 import eu.tjenwellens.lessenroosterchecker.elements.TimeStamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -151,19 +152,19 @@ public class KlasComparer implements WaiterWaiter {
         return klassenPermutatie;
     }
 
-    static Integer[][] testIntArr(List<List<Integer>> jaren) {
-//        List<List<Integer>> jaren = new ArrayList<>();//this.jaren
+    static Object[][] testIntArr(List<List<? extends Object>> jaren) {
+//        List<List<Object>> jaren = new ArrayList<>();//this.jaren
         int totalKlassenMultiplier = 1;
-        for (List<Integer> jaar : jaren) {
+        for (List<? extends Object> jaar : jaren) {
             totalKlassenMultiplier *= jaar.size();
         }
-        Integer[][] klassenPermutatie = new Integer[jaren.size()][totalKlassenMultiplier];
+        Object[][] klassenPermutatie = new Object[jaren.size()][totalKlassenMultiplier];
         for (int jaarPos = 0; jaarPos < jaren.size(); jaarPos++) {
-            List<Integer> klassen = new ArrayList<>(jaren.get(jaarPos));
+            List<Object> klassen = new ArrayList<>(jaren.get(jaarPos));
             int size = klassen.size();
             int multiplySize = 1;
             for (int klasPos = 0; klasPos < totalKlassenMultiplier; klasPos++) {
-                int toWrite = klassen.get((klasPos / multiplySize) % size);
+                Object toWrite = klassen.get((klasPos / multiplySize) % size);
                 klassenPermutatie[jaarPos][klasPos] = toWrite;
 //                klassenPermutatie[jaarPos][klasPos] = klassen.get(klasPos);
             }
@@ -173,24 +174,31 @@ public class KlasComparer implements WaiterWaiter {
     }
 
     public static void main(String[] args) {
-        new KlasComparer().start();
+//        new KlasComparer().start();
+        testIntegers();
     }
 
     public static void testIntegers() {
-        List<List<Integer>> jaren = new ArrayList<>();
-        List<Integer> ugent = new ArrayList<>();
-//        ugent.add(0);
-        ugent.add(1);
+        List<List<? extends Object>> jaren = new ArrayList<>();
+        List<Object> ugent = new ArrayList<>();
+        
+//        ugent.add("BI2");
+//        String ho1 = "1A1 1A2 1A3 1B1 1B2 1B3 1C1 1C2 1C3 1D1 1D2 1D3 1E1 1E2 1E3 1F1 1F2 1F3";
+//        String ho2 = "2A1 2A2 2B1 2B2 2C1 2C2";
+//        List<? extends Object> hogent1 = Arrays.asList(ho1.split(" "));
+//        List<? extends Object> hogent2 = Arrays.asList(ho2.split(" "));
+        
+        ugent.add(0);
         ugent.add(2);
         ugent.add(3);
 
-        List<Integer> hogent1 = new ArrayList<>();
-//        hogent1.add(0);
+        List<Object> hogent1 = new ArrayList<>();
+        hogent1.add(0);
         hogent1.add(1);
         hogent1.add(2);
 
-        List<Integer> hogent2 = new ArrayList<>();
-//        hogent2.add(0);
+        List<Object> hogent2 = new ArrayList<>();
+        hogent2.add(0);
         hogent2.add(1);
 
         if (!ugent.isEmpty()) {
@@ -204,13 +212,13 @@ public class KlasComparer implements WaiterWaiter {
         }
         printIntList(jaren);
         System.out.println("\n========================\n");
-        Integer[][] klassenPerm = testIntArr(jaren);
+        Object[][] klassenPerm = testIntArr(jaren);
         printIntArray(klassenPerm);
     }
 
-    static void printIntList(Collection<List<Integer>> jaren) {
-        for (List<Integer> list : jaren) {
-            for (Integer integer : list) {
+    static void printIntList(Collection<List<? extends Object>> jaren) {
+        for (List<? extends Object> list : jaren) {
+            for (Object integer : list) {
                 System.out.print(integer);
                 System.out.print(" ");
             }
@@ -218,11 +226,11 @@ public class KlasComparer implements WaiterWaiter {
         }
     }
 
-    static void printIntArray(Integer[][] klassenPerm) {
+    static void printIntArray(Object[][] klassenPerm) {
         for (int jaar = 0; jaar < klassenPerm.length; jaar++) {
-            Integer[] integers = klassenPerm[jaar];
+            Object[] integers = klassenPerm[jaar];
             for (int klas = 0; klas < integers.length; klas++) {
-                Integer integer = integers[klas];
+                Object integer = integers[klas];
                 System.out.print(integer);
                 System.out.print(" ");
             }
