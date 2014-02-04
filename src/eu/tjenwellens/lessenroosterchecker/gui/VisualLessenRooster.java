@@ -17,6 +17,7 @@ import javax.swing.JFrame;
  */
 public class VisualLessenRooster extends javax.swing.JPanel {
     public static final boolean PRINT_COURSE_NAME = true;
+    public static final int SHOW_LETTERS = 15;
     public static final int ROOSTER_START = 8;
     public static final int ROOSTER_END = 18;
     private static final int W = 400;
@@ -89,7 +90,7 @@ public class VisualLessenRooster extends javax.swing.JPanel {
                     g.setColor(Color.black);
                     int x = offset.x + size.width * dag;
                     int y = offset.y + size.height * (kwart + 1);
-                    g.drawString(les.substring(0, 4).toLowerCase(), x, y);
+                    g.drawString(les.substring(0, SHOW_LETTERS).toLowerCase(), x, y);
                 }
             }
         }

@@ -8,6 +8,7 @@ import eu.tjenwellens.lessenroosterchecker.elements.Vak;
 import eu.tjenwellens.lessenroosterchecker.gui.VisualLessenRooster;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -15,17 +16,29 @@ import java.util.Map;
  * @author Tjen
  */
 public class KlasPrinter extends KlasComparer {
+    private Collection<String> selection;
+
     public KlasPrinter() {
         chatty = false;
+        initSelection();
     }
 
     @Override
     protected void succes(Collection<Collection<Klas>> succes) {
         Map<String[][], String> roosters = createRoosters(succes);
+        int total = -1;
         for (Map.Entry<String[][], String> entry : roosters.entrySet()) {
             String[][] rooster = entry.getKey();
             String title = entry.getValue();
-            System.out.println(roosterTotal(rooster));
+            if (selection != null && !selection.contains(title)) {
+                continue;
+            }
+            int newTotal = roosterTotal(rooster);
+            if (total >= 0 && newTotal != total) {
+                System.err.println("Oops: roosterTotal mismatch!");
+            }
+            total = newTotal;
+//            System.out.println(roosterTotal(rooster));
             VisualLessenRooster.create(rooster, title);
         }
     }
@@ -53,6 +66,9 @@ public class KlasPrinter extends KlasComparer {
         int beginKwart = calcKwart(duur.getBegin().getUur(), duur.getBegin().getMinuten());
         int eindKwart = calcKwart(duur.getEind().getUur(), duur.getEind().getMinuten());
         for (int kwart = beginKwart; kwart < eindKwart; kwart++) {
+            if (rooster[dag][kwart] != null && !rooster[dag][kwart].equals(les.getCursusNaam())) {
+                System.err.println("Oops: overlappende lessen?" + rooster[dag][kwart] + "" + les.getCursusNaam());
+            }
             rooster[dag][kwart] = les.getCursusNaam();
         }
     }
@@ -85,5 +101,13 @@ public class KlasPrinter extends KlasComparer {
             }
         }
         System.out.println();
+    }
+
+    private void initSelection() {
+        selection = new HashSet<>();
+        selection.add("Klas: BI2 1C3 2B2 ");
+        selection.add("Klas: BI2 1D1 2B1 ");
+        selection.add("Klas: BI2 1D1 2B2 ");
+        selection.add("Klas: BI2 1C3 2B1 ");
     }
 }
