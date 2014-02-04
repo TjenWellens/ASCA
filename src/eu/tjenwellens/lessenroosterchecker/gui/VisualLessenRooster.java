@@ -16,25 +16,29 @@ import javax.swing.JFrame;
  * @author Tjen
  */
 public class VisualLessenRooster extends javax.swing.JPanel {
+    public static final boolean PRINT_COURSE_NAME = true;
     public static final int ROOSTER_START = 8;
     public static final int ROOSTER_END = 18;
-    private static final int W = 300;
+    private static final int W = 400;
     private static final int H = 400;
     private Dimension size = new Dimension(50, 20);
     private static final Point offset = new Point(20, 30);
     private JFrame frame;
-    private int[][] lessen;
+    private String[][] lessen;
+
+    private void recalculateSize() {
+        int w = (getWidth() - offset.x) / lessen.length;
+        int h = (getHeight() - offset.y) / lessen[0].length;
+        size = new Dimension(w, h);
+    }
 
     /**
      * Creates new form VisualLessenRooster
      */
-    private VisualLessenRooster(JFrame frame, int[][] lessen) {
+    private VisualLessenRooster(JFrame frame, String[][] lessen) {
         this.frame = frame;
         this.lessen = lessen;
         initComponents();
-        int w = (W - offset.x) / lessen.length;
-        int h = (H - offset.y) / lessen[0].length;
-        size = new Dimension(w, h);
 //        int width = (int) offset.getX() + size.width * lessen.length;
 //        int height = (int) offset.getY() + size.height * lessen[0].length;
 //        System.out.print(width);
@@ -43,13 +47,13 @@ public class VisualLessenRooster extends javax.swing.JPanel {
         this.setPreferredSize(new Dimension(W, H));
     }
 
-    public void setLessen(int[][] lessen) {
+    public void setLessen(String[][] lessen) {
         this.lessen = lessen;
         invalidate();
         validate();
     }
 
-    public static VisualLessenRooster create(int[][] rooster, String title) {
+    public static VisualLessenRooster create(String[][] rooster, String title) {
         JFrame frame = new JFrame(title);
         VisualLessenRooster panel = new VisualLessenRooster(frame, rooster);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,33 +65,32 @@ public class VisualLessenRooster extends javax.swing.JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+        recalculateSize();
         super.paintComponent(g);
 
         for (int dag = 0; dag < lessen.length; dag++) {
             for (int kwart = 0; kwart < lessen[dag].length; kwart++) {
+                String les = lessen[dag][kwart];
                 Color c;
-                switch (lessen[dag][kwart]) {
-                    case 0:
-                        if (dag >= 5) {
-                            c = getBackground().darker();
-                        } else {
-                            c = getBackground();
-                        }
-                        break;
-                    case 1:
-                        c = Color.green;
-                        break;
-                    case 2:
-                        c = Color.orange;
-                        break;
-                    case 3:
-                        c = Color.red;
-                        break;
-                    default:
-                        c = Color.black;
+                if (les == null) {
+                    if (dag >= 5) {
+                        c = getBackground().darker();
+                    } else {
+                        c = getBackground();
+                    }
+                } else if (les.isEmpty()) {
+                    c = Color.red;
+                } else {
+                    c = Color.green;
                 }
                 g.setColor(c);
                 g.fillRect(offset.x + size.width * dag, offset.y + size.height * kwart, offset.x + size.width * (dag + 1), offset.y + size.height * (kwart + 1));
+                if (PRINT_COURSE_NAME && les != null) {
+                    g.setColor(Color.black);
+                    int x = offset.x + size.width * dag;
+                    int y = offset.y + size.height * (kwart + 1);
+                    g.drawString(les.substring(0, 4).toLowerCase(), x, y);
+                }
             }
         }
         g.setColor(Color.black);

@@ -21,19 +21,19 @@ public class KlasPrinter extends KlasComparer {
 
     @Override
     protected void succes(Collection<Collection<Klas>> succes) {
-        Map<int[][], String> roosters = createRoosters(succes);
-        for (Map.Entry<int[][], String> entry : roosters.entrySet()) {
-            int[][] rooster = entry.getKey();
+        Map<String[][], String> roosters = createRoosters(succes);
+        for (Map.Entry<String[][], String> entry : roosters.entrySet()) {
+            String[][] rooster = entry.getKey();
             String title = entry.getValue();
             System.out.println(roosterTotal(rooster));
             VisualLessenRooster.create(rooster, title);
         }
     }
 
-    private Map<int[][], String> createRoosters(Collection<Collection<Klas>> succes) {
-        Map<int[][], String> roosters = new HashMap<>();
+    private Map<String[][], String> createRoosters(Collection<Collection<Klas>> succes) {
+        Map<String[][], String> roosters = new HashMap<>();
         for (Collection<Klas> klassen : succes) {
-            int[][] rooster = new int[7][(VisualLessenRooster.ROOSTER_END - VisualLessenRooster.ROOSTER_START) * 4];
+            String[][] rooster = new String[7][(VisualLessenRooster.ROOSTER_END - VisualLessenRooster.ROOSTER_START) * 4];
             StringBuilder title = new StringBuilder("Klas: ");
             for (Klas klas : klassen) {
                 title.append(klas.getKlasNaam()).append(' ');
@@ -47,21 +47,23 @@ public class KlasPrinter extends KlasComparer {
         return roosters;
     }
 
-    void addLesToRooster(int[][] rooster, Les les) {
+    void addLesToRooster(String[][] rooster, Les les) {
         int dag = les.getDag().ordinal();
         Duration duur = les.getDuur();
         int beginKwart = calcKwart(duur.getBegin().getUur(), duur.getBegin().getMinuten());
         int eindKwart = calcKwart(duur.getEind().getUur(), duur.getEind().getMinuten());
         for (int kwart = beginKwart; kwart < eindKwart; kwart++) {
-            rooster[dag][kwart] = 1;
+            rooster[dag][kwart] = les.getCursusNaam();
         }
     }
 
-    int roosterTotal(int[][] rooster) {
+    int roosterTotal(String[][] rooster) {
         int total = 0;
-        for (int[] days : rooster) {
-            for (int kwartValue : days) {
-                total += kwartValue;
+        for (String[] days : rooster) {
+            for (String kwartValue : days) {
+                if (kwartValue != null) {
+                    total++;
+                }
             }
         }
         return total;
