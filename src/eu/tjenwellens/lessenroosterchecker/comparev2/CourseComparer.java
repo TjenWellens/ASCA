@@ -23,7 +23,7 @@ public class CourseComparer implements WaiterWaiter {
 
     public CourseComparer() {
         w = new Waiter(this);
-        jaren.add(new UGent2(w));
+        //jaren.add(new UGent2(w));
         jaren.add(new HoGent1(w));
         jaren.add(new HoGent2(w));
         w.setHolders(jaren);

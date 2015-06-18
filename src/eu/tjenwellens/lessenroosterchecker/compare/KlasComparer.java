@@ -23,8 +23,8 @@ public class KlasComparer implements WaiterWaiter {
 
     public KlasComparer() {
         w = new Waiter(this);
-        jaren.add(new UGent1(w));
-        jaren.add(new UGent2(w));
+        //jaren.add(new UGent1(w));
+        //jaren.add(new UGent2(w));
         jaren.add(new HoGent1(w));
         jaren.add(new HoGent2(w));
         w.setHolders(jaren);

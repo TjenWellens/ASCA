@@ -19,7 +19,7 @@ public class HoGent1 extends VakSelector {
     protected List<Klas> loadVakken() {
         List<String> paths = new LinkedList<>();
         paths.add("jaar1_a.html");
-        paths.add("jaar1_b.html");
+        //paths.add("jaar1_b.html");
         return LessenroosterChecker.getKlassen(paths);
     }
 }
